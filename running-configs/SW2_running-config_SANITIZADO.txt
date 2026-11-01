@@ -1,0 +1,16 @@
+! Extracto de show running-config real (01/11/2026).
+! Hashes, banners y lineas predeterminadas omitidos. No es respaldo completo.
+
+hostname SW2
+enable secret [HASH_OCULTO]
+username oliver privilege 15 secret [HASH_OCULTO]
+spanning-tree mode pvst
+interface GigabitEthernet0/0
+ description HACIA-SW1
+ switchport mode access
+interface Vlan1
+ ip address 10.15.71.3 255.255.255.0
+ip default-gateway 10.15.71.1
+snmp-server community ZABBIXRO71 RO
+snmp-server location LABORATORIO-GNS3
+snmp-server contact Oliver

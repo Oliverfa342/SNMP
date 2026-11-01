@@ -1,0 +1,17 @@
+! Extracto de show running-config real (01/11/2026).
+! No es copia completa. Sin hashes de autenticacion ni banners.
+
+hostname R1
+no ip domain lookup
+ip dhcp excluded-address 10.15.71.1 10.15.71.99
+ip dhcp excluded-address 10.15.71.201 10.15.71.254
+ip dhcp pool LAN_ZABBIX
+ network 10.15.71.0 255.255.255.0
+ default-router 10.15.71.1
+interface FastEthernet0/0
+ description HACIA-SW1
+ ip address 10.15.71.1 255.255.255.0
+ duplex full
+snmp-server community ZABBIXRO71 RO
+snmp-server location LABORATORIO-GNS3
+snmp-server contact Oliver
