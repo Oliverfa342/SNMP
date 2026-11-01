@@ -1,5 +1,11 @@
 # Monitoreo de equipos Cisco con Zabbix, DHCP y SNMP
 
+## 🎥 Video demostrativo
+
+**[▶ Ver demostración de Zabbix, DHCP y SNMP en YouTube](https://youtu.be/WHTfUsrqivY)**
+
+El video muestra la topología en GNS3, las comprobaciones de DHCP y SNMP en Cisco y el monitoreo de R1, SW1 y SW2 desde Zabbix.
+
 **Estudiante:** Oliver Eliam Aquino Paulino  
 **Matrícula:** 2024-1571  
 **Asignatura:** Seguridad de Redes  
