@@ -6,6 +6,8 @@
 
 El video muestra la topología en GNS3, las comprobaciones de DHCP y SNMP en Cisco y el monitoreo de R1, SW1 y SW2 desde Zabbix.
 
+**[📄 Ver informe PDF con todas las evidencias](Documentacion_Zabbix_SNMP_Oliver_Eliam_Aquino_Paulino.pdf)**
+
 **Estudiante:** Oliver Eliam Aquino Paulino  
 **Matrícula:** 2024-1571  
 **Asignatura:** Seguridad de Redes  
@@ -18,8 +20,6 @@ Implementación de una red LAN virtual de laboratorio en GNS3, integrada por el 
 
 **Resultado verificado:** R1, SW1 y SW2 aparecen con disponibilidad SNMP en verde en el panel de Zabbix; se observan métricas de ICMP, estado de interfaces y tráfico en **Monitoring → Latest data**.
 
-> **Documentación PDF y capturas originales:** la versión completa con las capturas está preparada aparte y aún debe adjuntarse a este repositorio. Este README incluye los resultados y los extractos de configuración revisados. No se presenta un enlace al PDF que todavía no esté publicado aquí.
-
 ## Objetivos
 
 1. Configurar IP en R1, SW1 y SW2.
@@ -29,6 +29,10 @@ Implementación de una red LAN virtual de laboratorio en GNS3, integrada por el 
 5. Agregar los equipos Cisco a Zabbix y comprobar los valores recopilados por SNMP.
 
 ## Topología física de GNS3
+
+![Topología original montada en GNS3](evidencias/topologia.png)
+
+*Figura 1. Topología implementada en GNS3: R1, SW1, SW2, Zabbix y Cloud.*
 
 ~~~mermaid
 flowchart TB
@@ -57,6 +61,10 @@ El servidor Zabbix corre como QEMU VM dentro de GNS3. El Cloud conecta la topolo
 
 El DHCP dispone de direcciones **.100 a .200**: en R1 se excluyeron .1–.99 y .201–.254.
 
+![Concesión DHCP observada en el router R1](evidencias/dhcp.png)
+
+*Figura 2. Asignación de direcciones mediante DHCP en R1.*
+
 ## Configuración del router R1
 
 ~~~cisco
@@ -74,6 +82,10 @@ snmp-server community ZABBIXRO71 RO
 snmp-server location LABORATORIO-GNS3
 snmp-server contact Oliver
 ~~~
+
+![Configuración SNMP y tabla DHCP del router](evidencias/snmp_r1.png)
+
+*Figura 3. Comunidad SNMP de solo lectura y verificación DHCP en R1.*
 
 La salida real de `show ip dhcp binding` contiene la concesión `10.15.71.100` **Automatic / Active** para Zabbix. También aparece `10.15.71.104` con estado **Selecting**, no confirmada como concesión activa.
 
@@ -103,6 +115,16 @@ ip default-gateway 10.15.71.1
 snmp-server community ZABBIXRO71 RO
 ~~~
 
+### Configuración de los switches
+
+![Verificación de SW1](evidencias/sw1.png)
+
+*Figura 4. VLAN 1, interfaces GigabitEthernet y SNMP en SW1.*
+
+![Verificación de SW2](evidencias/sw2.png)
+
+*Figura 5. Direccionamiento, enlace al switch principal y SNMP en SW2.*
+
 ### Running-config sanitizados
 
 - [R1](running-configs/R1_running-config_SANITIZADO.txt)
@@ -121,6 +143,16 @@ default via 10.15.71.1 dev eth0
 ~~~
 
 `nginx` y `zabbix-server` respondieron `active`. La comunicación desde Zabbix a `10.15.71.1`, `10.15.71.2` y `10.15.71.3` respondió por ICMP.
+
+### Evidencias del servidor y los hosts
+
+![Dirección IP dinámica del servidor Zabbix](evidencias/zabbix_ip.png)
+
+*Figura 6. El servidor Zabbix recibió 10.15.71.100 mediante DHCP.*
+
+![Equipos Cisco registrados en Zabbix](evidencias/zabbix_hosts_tabla.png)
+
+*Figura 7. Disponibilidad SNMP en verde para R1, SW1 y SW2.*
 
 ## Flujo de DHCP y consultas SNMP
 
@@ -165,8 +197,41 @@ En **Data collection → Hosts** se registraron los tres equipos dentro de `Labo
 
 Los datos de tráfico mostrados en `Latest data` dependen del instante de consulta y no son valores constantes.
 
+### Métricas y tráfico observados en Zabbix
+
+![Datos de los dispositivos en Monitoring Latest data](evidencias/latest.png)
+
+*Figura 8. Valores ICMP y métricas recopiladas de las interfaces mediante SNMP.*
+
+![Métricas SNMP de Zabbix](evidencias/snmp_metricas.png)
+
+*Figura 9. Información de disponibilidad, tráfico, estado de puertos y velocidad.*
+
+### Más evidencias de la práctica
+
+<details>
+<summary>Ver capturas adicionales de pruebas y conectividad</summary>
+
+**Consola Linux de Zabbix: servicios, DHCP y pruebas**
+
+![Pruebas en la consola Zabbix](evidencias/consola.png)
+
+![Comprobaciones del servidor Zabbix](evidencias/zabbix_console_comprobaciones.png)
+
+**Listado de equipos supervisados**
+
+![Hosts en el panel de Zabbix](evidencias/hosts.png)
+
+**Conexión del Cloud con VMware VMnet2**
+
+![Conexión del adaptador Cloud](evidencias/cloud_vmnet2.png)
+
+</details>
+
 ## Documentos del repositorio
 
+- [📄 Informe completo en PDF](Documentacion_Zabbix_SNMP_Oliver_Eliam_Aquino_Paulino.pdf)
+- [📷 Galería de capturas y evidencias](docs/Lista_de_evidencias.md)
 - [Informe técnico y descripción de evidencias](docs/Informe_tecnico_Zabbix.md)
 - [Comandos de comprobación](scripts/Comandos_de_verificacion.md)
 - [Running-config de R1](running-configs/R1_running-config_SANITIZADO.txt)

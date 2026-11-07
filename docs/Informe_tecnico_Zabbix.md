@@ -40,4 +40,4 @@ Zabbix Appliance 7.0.32 con eth0 dynamic 10.15.71.100/24 y ruta default via 10.1
 
 ## Limitaciones
 
-No se verificaron alertas, notificaciones, SNMPv3 o monitoreo prolongado. Esta evidencia corresponde exclusivamente a la sesión de laboratorio. Las capturas originales y el informe PDF se conservaron fuera del repositorio mientras se completa su carga binaria.
+No se verificaron alertas, notificaciones, SNMPv3 o monitoreo prolongado. Esta evidencia corresponde exclusivamente a la sesión de laboratorio. Las capturas originales y el informe PDF se adjuntan en el repositorio.
